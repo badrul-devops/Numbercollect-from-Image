@@ -2,6 +2,8 @@ import os
 import re
 import pytesseract
 from PIL import Image
+import phonenumbers
+from phonenumbers import geocoder, is_valid_number
 # Directory containing the images
 directory = './picture/'
 
@@ -27,5 +29,6 @@ for filename in image_names:
     # print(text)
     phone_numbers = re.findall(phone_pattern, str(text))
     for phone_number in phone_numbers:
-        with open('phone_numbers.txt', 'a') as file:
-            file.write(phone_number + '\n')
+        if is_valid_number(phone_number):
+            with open('phone_numbers.txt', 'a') as file:
+                file.write(phone_number + '\n')
