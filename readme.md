@@ -16,7 +16,7 @@
 5. Then go to VScode and Active the environment
 6. Install all libraries
 
-   `pip install requirements.txt`
+   `pip install -r requirements.txt`
 7. Put all the images in piture folder
 8. Run the code
 

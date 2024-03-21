@@ -20,15 +20,26 @@ for filename in os.listdir(directory):
 for filename in image_names:
     # Open the image file
     image = Image.open(f'./picture/{filename}')
-    # pytesseract.pytesseract.tesseract_cmd = r'C:\Users\USER\AppData\Local\Tesseract-OCR\tesseract.exe'
-    # Perform OCR using PyTesseract
+
     text = pytesseract.image_to_string(image)
-    # text= "+65 9184 8491"
-    phone_pattern = r'\+\d{1,9}\s?\d{1,9}[-\s]?\d{1,9}'
-    # Print the extracted text
-    # print(text)
-    phone_numbers = re.findall(phone_pattern, str(text))
-    for phone_number in phone_numbers:
-        if is_valid_number(phone_number):
+
+    country_codes = ["AF"]#, "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AC", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BA", "BW", "BR", "VG", "BN", "BG", "BF", "MM", "BI", "KH", "CM", "CA", "CV", "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CG", "CK", "CR", "HR", "CU", "CY", "CZ", "CD", "DK", "DG", "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "ET", "FK", "FO", "FJ", "FI", "FR", "GF", "PF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD", "GP", "GU", "GT", "GN", "GW", "GY", "HT", "VA", "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT", "CI", "JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MK", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ", "MR", "MU", "YT", "MX", "FM", "MD", "MC", "MN", "ME", "MS", "MA", "MZ", "NA", "NR", "NP", "NL", "AN", "NC", "NZ", "NI", "NE", "NG", "NU", "NF", "KP", "MP", "NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PN", "PL", "PT", "PR", "QA", "CG", "RE", "RO", "RU", "RW", "BL", "SH", "KN", "LC", "MF", "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "KR", "SS", "ES", "LK", "SD", "SR", "SJ", "SZ", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC", "TV", "UG", "UA", "AE", "GB", "US", "UY", "VI", "UZ", "VU", "VE", "VN", "WF", "EH", "YE", "ZM", "ZW"]
+
+# Iterate over each country code
+    for country_code in country_codes:
+
+        matches = phonenumbers.PhoneNumberMatcher(text, country_code)
+        # print(matches)
+
+    # Print the extracted phone numbers
+        for i, match in enumerate(matches):
+            
+            phone=phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.E164)
             with open('phone_numbers.txt', 'a') as file:
-                file.write(phone_number + '\n')
+                 file.write(phone + '\n')
+            
+            # number = match.number
+            # parsed_number = phonenumbers.parse(number, "XX")
+            # print(parsed_number)
+            # country = geocoder.description_for_number(parsed_number, "en")
+            # print(f"Extracted phone number in {country_code}: {number} ({country})")
